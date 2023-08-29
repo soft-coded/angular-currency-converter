@@ -4,7 +4,12 @@
 
 export const environment = {
   production: false,
-  API_URL : 'https://api.exchangeratesapi.io/latest'
+  // !! IMPORTANT !!
+  /*
+  The exchangerates api has changed to now allow only the links with actual API access keys present in them. Therefore, I have manually generated an API key to make this work.
+   */
+  API_URL:
+    "http://api.exchangeratesapi.io/latest?access_key=3fb9aaf97754b1dd99289bc13d2ba3e1",
 };
 
 /*
