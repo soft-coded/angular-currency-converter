@@ -15,14 +15,15 @@ export class ComparatorComponent implements OnChanges {
 
   // function is used to get exchange rates of particular base currency
   ngOnChanges() {
-    if (this.from !== undefined) {
-      this.exchangeRates = [];
-      this.currencyService
-        .getAllExchangeRate(this.from)
-        .subscribe(
-          (data) => (this.exchangeRates = this.convertFetchedData(data))
-        );
-    }
+    // the following if check is redundant, as this.form will never be undefined
+    // if (this.from !== undefined) {
+    this.exchangeRates = [];
+    this.currencyService
+      .getAllExchangeRate(this.from)
+      .subscribe(
+        (data) => (this.exchangeRates = this.convertFetchedData(data))
+      );
+    // }
   }
 
   convertFetchedData(data) {
