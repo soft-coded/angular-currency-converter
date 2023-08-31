@@ -1,7 +1,7 @@
 import { CurrencyService } from "./../currency.service";
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
-import { ToastrService } from "ngx-toastr";
+// import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-converter",
@@ -23,9 +23,9 @@ export class ConverterComponent implements OnInit {
   comparatorInput: string;
 
   constructor(
-    private currencyService: CurrencyService,
-    private toastr: ToastrService
-  ) {}
+    private currencyService: CurrencyService
+  ) // private toastr: ToastrService
+  {}
 
   ngOnInit() {
     this.getCurrencyList();

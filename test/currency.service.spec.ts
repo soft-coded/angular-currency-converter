@@ -5,7 +5,11 @@ import {
 } from "@angular/common/http/testing";
 
 import { CurrencyService } from "../src/app/currency.service";
-import { baseEurExchangeRates, usdToInr } from "./return-data";
+import {
+  baseEurExchangeRates,
+  baseInrExchangeRates,
+  usdToInr,
+} from "./return-data";
 import { environment } from "src/environments/environment";
 
 describe("CurrencyService", () => {
@@ -87,5 +91,17 @@ describe("CurrencyService", () => {
   it("getAllExchangeRate() should return all exchange rates for particular base", () => {
     // Testcase to check whether function send a string('INR') to backend
     // Use httpTestingController to create a mock backend to return a value(baseInrExchangeRates) from return-data.ts
+
+    service.getAllExchangeRate("INR").subscribe((data) => {
+      expect(data).toEqual(baseInrExchangeRates);
+    });
+
+    const request = httpMock.expectOne({
+      method: "GET",
+      url: environment.API_URL + "&base=INR",
+    });
+
+    request.flush(baseInrExchangeRates);
+    httpMock.verify();
   });
 });
