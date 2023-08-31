@@ -19,11 +19,17 @@ export class ComparatorComponent implements OnChanges {
       this.exchangeRates = [];
       this.currencyService
         .getAllExchangeRate(this.from)
-        .subscribe((data) =>
-          Object.keys(data.rates).forEach((key) =>
-            this.exchangeRates.push({ key: [key], value: data.rates[key] })
-          )
+        .subscribe(
+          (data) => (this.exchangeRates = this.convertFetchedData(data))
         );
     }
+  }
+
+  convertFetchedData(data) {
+    const retArr = [];
+    Object.keys(data.rates).forEach((key) =>
+      retArr.push({ key: [key], value: data.rates[key] })
+    );
+    return retArr;
   }
 }
