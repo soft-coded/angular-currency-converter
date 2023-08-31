@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { Observable } from "rxjs";
 
 import { ComparatorComponent } from "../src/app/comparator/comparator.component";
+import { baseEurExchangeRates } from "./return-data";
+import { CurrencyService } from "src/app/currency.service";
 
 describe("ComparatorComponent", () => {
   let component: ComparatorComponent;
@@ -14,7 +17,7 @@ describe("ComparatorComponent", () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ComparatorComponent);
-    component = fixture.componentInstance;
+    component = fixture.debugElement.componentInstance;
     fixture.detectChanges();
   });
 
@@ -30,9 +33,17 @@ describe("ComparatorComponent", () => {
     );
   });
 
-  it("ngOnChanges() should return exchangeRates", () => {
+  it("should return exchangeRates", waitForAsync(() => {
     // Testcase to check whether the function returns exchange rates for a base currency
     // Use spyOn to give a value('baseUsdExchangeRates') from return-data.ts when a function of service is called
-    
-  });
+
+    component.from = "EUR"; // EUR is the only currency available in the free tier of the API
+    const service = fixture.debugElement.injector.get(CurrencyService);
+
+    /* The following code would have been used if ngOnChanges were to return some value, but since ngOnChanges returns void, we cannot use the code below. It internally calls the services and assigns the result to component.exchangeRates.
+        
+    const spyingResult = spyOn(component, "ngOnChanges").and.returnValue(
+      baseUsdExchangeRates
+    ); */
+  }));
 });
