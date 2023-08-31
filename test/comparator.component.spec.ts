@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { Observable } from "rxjs";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 import { ComparatorComponent } from "../src/app/comparator/comparator.component";
 import { baseEurExchangeRates } from "./return-data";
@@ -11,6 +11,7 @@ describe("ComparatorComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       declarations: [ComparatorComponent],
     }).compileComponents();
   }));
