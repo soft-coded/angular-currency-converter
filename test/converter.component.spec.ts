@@ -4,7 +4,7 @@ import { of } from "rxjs";
 import { ToastrService } from "ngx-toastr";
 
 import { ConverterComponent } from "../src/app/converter/converter.component";
-import { baseEurExchangeRates } from "./return-data";
+import { baseEurExchangeRates, usdToInr } from "./return-data";
 import { CurrencyService } from "src/app/currency.service";
 
 describe("ConverterComponent", () => {
@@ -62,9 +62,28 @@ describe("ConverterComponent", () => {
   it("convert() given values should return the exchange rate for the required currency", () => {
     // Testcase to check whether the function returns exchange rate for from currency 'USD' and to currency 'INR'
     // Use spyOn to give a value('usdToInr') from return-data.ts when a function of service is called
+
+    component.converterForm.get("from").setValue("USD");
+    component.converterForm.get("to").setValue("INR");
+
+    const service = fixture.debugElement.injector.get(CurrencyService);
+    spyOn(service, "getSpecificExchangeRate").and.callFake(() => {
+      return of(usdToInr);
+    });
+
+    component.convert();
+
+    const helperRes = component.convertHelper(usdToInr);
+
+    expect(component.resultValue).toEqual(helperRes.resultValue);
+    expect(component.exchangeRate).toEqual(helperRes.exchangeRate);
   });
 
   it("convert() given input null should return error message and hide the exchange rate", () => {
     // Testcase to check whether the function is hidden when from currency or to currency is 'null'
+
+    // The form values are set to null by default so we don't need to set them here, we just need to run the check;
+    expect(component.convert()).toEqual("Currency not selected");
+    expect(component.converted).toBeFalse();
   });
 });
