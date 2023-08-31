@@ -56,7 +56,9 @@ describe("ConverterComponent", () => {
 
     component.getCurrencyList();
 
-    expect(component.currencyList).toEqual(Object.keys(baseEurExchangeRates));
+    expect(component.currencyList).toEqual(
+      Object.keys(baseEurExchangeRates.rates)
+    );
   });
 
   it("convert() given values should return the exchange rate for the required currency", () => {
