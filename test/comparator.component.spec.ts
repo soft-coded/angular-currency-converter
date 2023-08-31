@@ -3,7 +3,7 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { of } from "rxjs";
 
 import { ComparatorComponent } from "../src/app/comparator/comparator.component";
-import { baseEurExchangeRates, baseUsdExchangeRates } from "./return-data";
+import { baseUsdExchangeRates } from "./return-data";
 import { CurrencyService } from "src/app/currency.service";
 
 describe("ComparatorComponent", () => {

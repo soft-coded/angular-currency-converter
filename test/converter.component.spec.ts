@@ -1,7 +1,11 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { of } from "rxjs";
+import { ToastrService } from "ngx-toastr";
 
 import { ConverterComponent } from "../src/app/converter/converter.component";
+import { baseEurExchangeRates } from "./return-data";
+import { CurrencyService } from "src/app/currency.service";
 
 describe("ConverterComponent", () => {
   let component: ConverterComponent;
@@ -11,6 +15,7 @@ describe("ConverterComponent", () => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       declarations: [ConverterComponent],
+      providers: [{ provide: ToastrService, useValue: {} }],
     }).compileComponents();
   }));
 
@@ -43,6 +48,15 @@ describe("ConverterComponent", () => {
     // Testcase to check whether the function returns exchange rates for a base currency 'EUR'
     // Use spyOn to give a value('baseEurExchangeRates') from return-data.ts when a function of service is called
     // since the values keep changing, we cannot compare the values. We can only compare the keys.
+
+    const service = fixture.debugElement.injector.get(CurrencyService);
+    spyOn(service, "getCurrencyList").and.callFake(() => {
+      return of(baseEurExchangeRates);
+    });
+
+    component.getCurrencyList();
+
+    expect(component.currencyList).toEqual(Object.keys(baseEurExchangeRates));
   });
 
   it("convert() given values should return the exchange rate for the required currency", () => {
